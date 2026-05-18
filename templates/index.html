@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPN Helper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    var theme = localStorage.getItem('theme');
+    if (!theme) {
+      theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+<div class="app-shell">
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <h1 class="brand-name">VPN Helper</h1>
+      </div>
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode" title="Toggle dark mode">☾</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="content">
+      <section class="control-panel">
+        <div class="control-subtitle">For anyone tired of noisy, clingy VPN client behavior.</div>
+        <div class="btn-group">
+          <button class="btn btn-success" id="btn-vpn-connect" onclick="connectVPN()">Connect</button>
+          <button class="btn btn-danger" id="btn-vpn-disconnect" onclick="disconnectVPN()" disabled>Disconnect</button>
+        </div>
+      </section>
+
+      <div class="status-grid">
+        <div class="status-card" id="status-sso">
+          <div>
+            <div class="status-label">SSO</div>
+            <div class="status-value" id="sso-status-text">Idle</div>
+            <div class="status-meta" id="sso-status-meta">Belum ada callback.</div>
+          </div>
+        </div>
+
+        <div class="status-card" id="status-vpn">
+          <div>
+            <div class="status-label">VPN</div>
+            <div class="status-value" id="vpn-status-text">Tidak Terhubung</div>
+            <div class="status-meta" id="vpn-status-meta">Tunnel belum aktif.</div>
+          </div>
+        </div>
+
+        <div class="status-card" id="status-gateway">
+          <div>
+            <div class="status-label">Gateway</div>
+            <div class="status-value" id="gateway-status-text">Belum Siap</div>
+            <div class="status-meta" id="gateway-status-meta">Menunggu sesi gateway.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="log-panel">
+        <div class="log-header">
+          <div class="log-title">Activity Log</div>
+          <div class="log-actions">
+            <button class="log-btn" id="log-pause-btn" onclick="toggleLogPause()">Pause</button>
+            <button class="log-btn" onclick="copyLogs()">Copy</button>
+            <button class="log-btn" onclick="clearLogs()">Bersihkan</button>
+          </div>
+        </div>
+        <div class="log-body" id="log-body">
+          <div class="log-empty" id="log-empty">Belum ada aktivitas.</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">Made with ♥, Gilang Wahyu Prasetyo © BPS Kabupaten Tabalong</div>
+  </footer>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</body>
+</html>

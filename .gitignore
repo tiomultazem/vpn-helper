@@ -1,0 +1,14 @@
+.env
+README-internal.md
+realapp.py
+minifier.py
+c.bat
+*.log
+server.out.log
+server.err.log
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+env/
