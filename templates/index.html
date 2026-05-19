@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VPN Helper</title>
+<link rel="icon" href="{{ url_for('favicon') }}" sizes="any">
+<link rel="shortcut icon" href="{{ url_for('favicon') }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -23,6 +25,7 @@
   <header class="header">
     <div class="header-inner">
       <div class="header-brand">
+        <img class="brand-logo" src="{{ url_for('assets', filename='logo.png') }}" alt="" aria-hidden="true">
         <h1 class="brand-name">VPN Helper</h1>
       </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode" title="Toggle dark mode">☾</button>
