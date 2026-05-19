@@ -52,7 +52,7 @@ Silakan ikuti langkah menginstal OpenConnect di section [**Persiapan**](#persiap
 Kenapa .env kupisah ke Git BPS? Isinya konfigurasi sensitif. Walaupun semua orang bisa menguliknya sendiri dengan brainstorming, namun setidaknya bukan karna lihat repoku. 
 ```
 6. Klik `run.bat` (Windows) atau jalankan `sh run.sh` (Mac/Linux) untuk menjalankan aplikasi.
-7. Akses di http://localhost:5000
+7. Akses di http://localhost:8765
 8. Ada 3 status di aplikasi yang menandakan VPN aktif ketika tiga-tiganya aktif(berwarna hijau): SSO, VPN dan Gateway. Gausah bingung, tombol connect akan membuat ketiganya aktif serempak, demikian tombol disconnect membuat ketiganya mati.
 ---
 
