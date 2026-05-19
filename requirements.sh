@@ -13,7 +13,7 @@ else
   exit 1
 fi
 
-if "$PYTHON_BIN" -c "import importlib.util, sys; mods=('flask','dotenv','requests','cryptography'); missing=[m for m in mods if importlib.util.find_spec(m) is None]; print('Missing packages: ' + ', '.join(missing) if missing else 'All Python dependencies are already installed.'); sys.exit(1 if missing else 0)"; then
+if "$PYTHON_BIN" -c "import importlib.util, sys; mods=('flask','dotenv','requests','cryptography','pystray','PIL'); missing=[m for m in mods if importlib.util.find_spec(m) is None]; print('Missing packages: ' + ', '.join(missing) if missing else 'All Python dependencies are already installed.'); sys.exit(1 if missing else 0)"; then
   :
 else
   if ! "$PYTHON_BIN" -m pip --version >/dev/null 2>&1; then

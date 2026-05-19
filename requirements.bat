@@ -10,7 +10,7 @@ if errorlevel 1 (
     exit /b 1
 )
 
-python -c "import importlib.util, sys; mods=('flask','dotenv','requests','cryptography'); missing=[m for m in mods if importlib.util.find_spec(m) is None]; print('Missing packages: ' + ', '.join(missing) if missing else 'All Python dependencies are already installed.'); sys.exit(1 if missing else 0)"
+python -c "import importlib.util, sys; mods=('flask','dotenv','requests','cryptography','pystray','PIL'); missing=[m for m in mods if importlib.util.find_spec(m) is None]; print('Missing packages: ' + ', '.join(missing) if missing else 'All Python dependencies are already installed.'); sys.exit(1 if missing else 0)"
 if errorlevel 1 (
     python -m pip --version >nul 2>&1
     if errorlevel 1 (
