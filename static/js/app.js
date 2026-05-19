@@ -2,6 +2,8 @@ let lastLogCount = 0;
 let lastLogSignature = '';
 let latestLogs = [];
 let logsPaused = false;
+let connectNotificationPending = false;
+let tunnelStartRequested = false;
 
 (function () {
   const btn = document.querySelector('[data-theme-toggle]');
@@ -36,6 +38,33 @@ function showToast(msg, type = 'info') {
   t.innerHTML = `<span>${type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ'}</span><span>${msg}</span>`;
   c.appendChild(t);
   setTimeout(() => t.remove(), 3000);
+}
+
+async function ensureNotificationPermission() {
+  if (!('Notification' in window)) return false;
+  if (Notification.permission === 'granted') return true;
+  if (Notification.permission !== 'default') return false;
+
+  try {
+    const permission = await Notification.requestPermission();
+    return permission === 'granted';
+  } catch (e) {
+    return false;
+  }
+}
+
+async function notifyAction(title, message, type = 'info') {
+  showToast(message, type);
+
+  if (await ensureNotificationPermission()) {
+    try {
+      new Notification(title, {
+        body: message,
+        icon: '/assets/logo.png'
+      });
+    } catch (e) {
+    }
+  }
 }
 
 function escHtml(str = '') {
@@ -171,6 +200,22 @@ function updateStatus(data) {
   btnConnect.disabled = ssoInProgress || vpnConnected;
   btnConnect.textContent = ssoInProgress ? 'Connecting...' : 'Connect';
   btnDisconnect.disabled = !(vpnConnected || ssoInProgress || ssoCompleted || cookieFound || configLoaded);
+
+  if (connectNotificationPending && configLoaded && !vpnConnected && !tunnelStartRequested) {
+    tunnelStartRequested = true;
+    apiCall('/api/connect/vpn', {})
+      .catch(e => {
+        connectNotificationPending = false;
+        tunnelStartRequested = false;
+        showToast(e.message || 'Gagal memulai tunnel VPN.', 'error');
+      });
+  }
+
+  if (connectNotificationPending && vpnConnected) {
+    connectNotificationPending = false;
+    tunnelStartRequested = false;
+    notifyAction('VPN Helper - VPN connected', 'VPN connected.', 'success');
+  }
 }
 
 async function pollStatus() {
@@ -214,9 +259,12 @@ async function connectVPN() {
 
   try {
     const data = await apiCall('/api/connect/sso', {});
+    connectNotificationPending = true;
+    tunnelStartRequested = false;
     showToast(data.message || 'Connect dimulai.', 'success');
     await pollStatus();
   } catch (e) {
+    connectNotificationPending = false;
     showToast(e.message || 'Gagal connect.', 'error');
     btn.disabled = false;
   }
@@ -224,8 +272,10 @@ async function connectVPN() {
 
 async function disconnectVPN() {
   try {
-    const data = await apiCall('/api/disconnect/vpn', {});
-    showToast(data.message || 'Disconnected.', 'info');
+    const data = await apiCall('/api/logout', {});
+    connectNotificationPending = false;
+    tunnelStartRequested = false;
+    await notifyAction('VPN Helper - VPN disconnected', 'VPN disconnected.', 'info');
     await pollStatus();
   } catch (e) {
     showToast(e.message || 'Gagal disconnect.', 'error');

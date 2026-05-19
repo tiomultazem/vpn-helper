@@ -23,6 +23,7 @@
   --shadow-sm:0 1px 3px oklch(0 0 0 / 0.3); --shadow-md:0 4px 16px oklch(0 0 0 / 0.4);
 }
 *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+[hidden] { display:none !important; }
 html { -webkit-font-smoothing:antialiased; }
 html, body, .header, .footer, .main, .control-panel, .status-card, .log-panel, .card, .btn, .log-btn, .theme-toggle, .input, .toast {
   transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease;

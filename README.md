@@ -114,7 +114,16 @@ Kenapa .env kupisah ke Git BPS? Isinya konfigurasi sensitif. Walaupun semua oran
 
 7. Akses di http://localhost:8765
 
-8. Ada 3 status di aplikasi yang menandakan VPN aktif ketika tiga-tiganya aktif(berwarna hijau): SSO, VPN dan Gateway. Gausah bingung, tombol connect akan membuat ketiganya aktif serempak, demikian tombol disconnect membuat ketiganya mati.
+8. Ada 3 status di aplikasi:
+
+   - SSO: hijau kalau login SSO sudah selesai dan app menerima Authentication ID.
+   - Gateway: hijau kalau Authentication ID sudah ditukar menjadi sesi SSL-VPN dan konfigurasi gateway berhasil dibaca.
+   - VPN: hijau kalau tunnel OpenConnect sudah aktif.
+
+   Tombolnya sederhana:
+
+   - `Connect`: menjalankan SSO, menyiapkan Gateway, lalu otomatis menjalankan tunnel VPN.
+   - `Disconnect`: memutus tunnel VPN dan membersihkan sesi SSO/Gateway, supaya connect berikutnya mulai dari sesi baru.
 
 ---
 
