@@ -56,6 +56,11 @@ Kenapa .env kupisah ke Git BPS? Isinya konfigurasi sensitif. Walaupun semua oran
 8. Ada 3 status di aplikasi yang menandakan VPN aktif ketika tiga-tiganya aktif(berwarna hijau): SSO, VPN dan Gateway. Gausah bingung, tombol connect akan membuat ketiganya aktif serempak, demikian tombol disconnect membuat ketiganya mati.
 ---
 
+## QnA
+Feel free to reach me out via WhatsApp.
+
+---
+
 ## License
 
 This project is distributed under the VPN Helper Use-Only License.
