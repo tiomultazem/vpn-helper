@@ -158,19 +158,19 @@ def BH():
 def Al():
 	if S.name!=o or not Af:return
 	try:
-		import ctypes as B;M=B.windll.kernel32;E=B.windll.user32;F=M.GetConsoleWindow()
-		if not F:return
-		N=61536;O=0;P=1;Q=5;G=-4
-		if B.sizeof(B.c_void_p)==B.sizeof(B.c_longlong):H=E.GetWindowLongPtrW;I=E.SetWindowLongPtrW
-		else:H=E.GetWindowLongW;I=E.SetWindowLongW
-		T=B.WINFUNCTYPE(B.c_longlong,B.c_void_p,B.c_uint,B.c_void_p,B.c_void_p);U=H(F,G)
-		def V(hwnd,msg,wparam,lparam):
-			A=wparam
-			if msg==Q and int(A)==P:E.ShowWindow(hwnd,0);return 0
-			return E.CallWindowProcW(U,hwnd,msg,A,lparam)
-		J=T(V);Al._console_proc=J;I(F,G,J);L=E.GetSystemMenu(F,D)
-		if L:E.DeleteMenu(L,N,O);E.DrawMenuBar(F)
-	except R as W:C(f"{A(83,((253,272,451),(276,281,300,282,448,365),(274,286,287,450,286,281),(272,365,282,272,365,449),(451,300,452,365,449,276),(273,300,282,365,275,276),(450,300,365,273,276,300),(282,449,276,279,282,300),(287,267,365)))}{W}",K)
+		import ctypes as B;Q=B.windll.kernel32;D=B.windll.user32;I=Q.GetConsoleWindow()
+		if not I:return
+		T=61536;U=1;V=5;W=16;X=274;J=-4;E=B.c_void_p;L=B.c_uint;M=B.c_size_t;N=B.c_ssize_t;O=B.c_ssize_t;F=B.c_ssize_t;D.CallWindowProcW.argtypes=[F,E,L,M,N];D.CallWindowProcW.restype=O;D.ShowWindow.argtypes=[E,B.c_int]
+		if B.sizeof(B.c_void_p)==B.sizeof(B.c_longlong):G=D.GetWindowLongPtrW;H=D.SetWindowLongPtrW
+		else:G=D.GetWindowLongW;H=D.SetWindowLongW
+		G.argtypes=[E,B.c_int];G.restype=F;H.argtypes=[E,B.c_int,F];H.restype=F;Y=B.WINFUNCTYPE(O,E,L,M,N);Z=G(I,J)
+		def a(hwnd,msg,wparam,lparam):
+			B=wparam;C=hwnd;A=msg
+			if A==V and int(B)==U:D.ShowWindow(C,0);return 0
+			if A==W or A==X and int(B)&65520==T:D.ShowWindow(C,0);return 0
+			return D.CallWindowProcW(Z,C,A,B,lparam)
+		P=Y(a);Al._console_proc=P;H(I,J,B.cast(P,B.c_void_p).value)
+	except R as b:C(f"{A(83,((253,272,451),(276,281,300,282,448,365),(274,286,287,450,286,281),(272,365,282,272,365,449),(451,300,452,365,449,276),(273,300,282,365,275,276),(450,300,365,273,276,300),(282,449,276,279,282,300),(287,267,365)))}{b}",K)
 def BI():
 	if S.name!=o:return
 	try:
