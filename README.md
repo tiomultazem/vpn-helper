@@ -32,6 +32,10 @@ Silakan ikuti langkah menginstal OpenConnect di section [**Persiapan**](#persiap
    Download OpenConnect CLI 9.12.x untuk Windows 64-bit di sini:
    - [Direct OpenConnect 64-bit installer](https://www.infradead.org/openconnect-gui/download/openconnect-gui-1.6.2-win64.exe)
 
+   Kalau tampil jendela seperti ini saat instalasi, jangan lupa centang console.
+
+   ![Centang console OpenConnect](assets/ceklis%20console.png)
+
    Setelah install, pastikan `.env` mengarah ke binary CLI-nya:
 
    ```env
