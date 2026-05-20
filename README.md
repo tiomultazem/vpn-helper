@@ -17,6 +17,10 @@ VPN itu pada dasarnya bikin tunnel: jalur khusus dari komputer kita ke jaringan 
 Silakan ikuti langkah menginstal OpenConnect di section [**Persiapan**](#persiapan).
 
 ---
+## DISCLAIMER
+Aplikasi ini baru banget rilis (initial commit 19 Mei 2026) sehingga belum melalui stress test. dengan menggunakannya, anda secara tidak langsung berpartisipasi dalam uji stres sehingga sangat dianjurkan untuk secara aktif melaporkan bug yang anda temui.
+
+---
 ## Persiapan
 
 1. Clone repo ini atau download ZIP-nya, lalu ekstrak ke folder pilihanmu.
