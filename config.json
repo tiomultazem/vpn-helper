@@ -1,0 +1,20 @@
+{
+  "version": "1.26.0522",
+  "github": {
+    "owner": "tiomultazem",
+    "repo": "vpn-helper",
+    "branch": "main",
+    "config_url": "https://raw.githubusercontent.com/tiomultazem/vpn-helper/main/config.json",
+    "zip_url": "https://github.com/tiomultazem/vpn-helper/archive/refs/heads/main.zip"
+  },
+  "changelog": [
+    {
+      "version": "1.26.0522",
+      "date": "2026-05-22",
+      "changes": [
+        "Menambahkan config versi aplikasi.",
+        "Menyiapkan updater otomatis dari GitHub."
+      ]
+    }
+  ]
+}

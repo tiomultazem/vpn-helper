@@ -82,6 +82,15 @@ label { font-size:var(--text-xs); font-weight:500; color:var(--text-muted); }
 .log-empty { color:var(--text-faint); font-size:var(--text-xs); text-align:center; padding:2rem; }
 #toast-container { position:fixed; bottom:1.25rem; right:1.25rem; display:flex; flex-direction:column; gap:.5rem; z-index:9999; pointer-events:none; }
 .toast { display:flex; align-items:center; gap:.5rem; padding:.625rem 1rem; border-radius:var(--r-lg); border:1px solid var(--border); background:var(--surface-2); box-shadow:var(--shadow-md); font-size:var(--text-xs); font-weight:500; pointer-events:all; max-width:320px; }
+.swal2-popup.vpn-update-popup { background:var(--surface-2); color:var(--text); border:1px solid var(--border); border-radius:var(--r-lg); }
+.vpn-update-popup .swal2-title { color:var(--text); font-size:1.35rem; }
+.vpn-update-popup .swal2-html-container { color:var(--text); margin:.75rem 0 0; }
+.vpn-update-latest { text-align:left; font-size:var(--text-sm); line-height:1.55; }
+.vpn-update-latest span, .vpn-update-history span { color:var(--text-muted); font-size:var(--text-xs); }
+.vpn-update-latest ul, .vpn-update-history ul { margin:.35rem 0 0 1.1rem; }
+.vpn-update-history { margin-top:.85rem; max-height:180px; overflow-y:auto; text-align:left; border:1px solid var(--border); border-radius:var(--r-md); background:var(--surface-off); padding:.7rem; }
+.vpn-update-history-entry + .vpn-update-history-entry { margin-top:.7rem; padding-top:.7rem; border-top:1px solid var(--divider); }
+.vpn-update-empty { color:var(--text-muted); font-size:var(--text-xs); }
 .footer { display:flex; align-items:center; justify-content:center; padding:.85rem 1.25rem; background:var(--surface); border-top:1px solid var(--border); }
 .footer-inner { color:var(--text-muted); font-size:var(--text-xs); text-align:center; }
 @media (max-width: 900px) {

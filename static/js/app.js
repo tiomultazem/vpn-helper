@@ -321,3 +321,133 @@ async function copyLogs() {
   }
 }
 
+let updatePromptShown = false;
+
+function versionKey(version = '') {
+  return String(version).split(/[.-]/).map(part => {
+    const digits = part.replace(/\D/g, '');
+    return Number.parseInt(digits || '0', 10);
+  });
+}
+
+function compareVersion(a, b) {
+  const left = versionKey(a);
+  const right = versionKey(b);
+  const length = Math.max(left.length, right.length);
+
+  for (let i = 0; i < length; i += 1) {
+    const diff = (left[i] || 0) - (right[i] || 0);
+    if (diff !== 0) return diff;
+  }
+
+  return 0;
+}
+
+function sortChangelog(changelog = []) {
+  return [...changelog].sort((a, b) => compareVersion(b.version, a.version));
+}
+
+function renderChangeItems(changes = []) {
+  if (!Array.isArray(changes) || changes.length === 0) {
+    return '<p>Tidak ada catatan perubahan.</p>';
+  }
+
+  return `<ul>${changes.map(change => `<li>${escHtml(change)}</li>`).join('')}</ul>`;
+}
+
+function renderUpdateHtml(data) {
+  const changelog = sortChangelog(data.changelog || []);
+  const latest = changelog[0] || {
+    version: data.remote_version,
+    date: '',
+    changes: ['Versi baru tersedia.']
+  };
+  const older = changelog.slice(1);
+  const latestDate = latest.date ? ` <span>${escHtml(latest.date)}</span>` : '';
+  const olderHtml = older.length
+    ? older.map(entry => `
+      <div class="vpn-update-history-entry">
+        <strong>${escHtml(entry.version)}</strong>${entry.date ? ` <span>${escHtml(entry.date)}</span>` : ''}
+        ${renderChangeItems(entry.changes)}
+      </div>
+    `).join('')
+    : '<div class="vpn-update-empty">Belum ada changelog lama.</div>';
+
+  return `
+    <div class="vpn-update-latest">
+      <div><strong>${escHtml(latest.version)}</strong>${latestDate}</div>
+      ${renderChangeItems(latest.changes)}
+    </div>
+    <div class="vpn-update-history">${olderHtml}</div>
+  `;
+}
+
+async function installUpdate() {
+  if (window.Swal) {
+    Swal.fire({
+      title: 'Mengupdate...',
+      text: 'Tunggu sebentar. App akan restart otomatis.',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      didOpen: () => Swal.showLoading()
+    });
+  }
+
+  const data = await apiCall('/api/update/install', {});
+
+  if (window.Swal) {
+    Swal.fire({
+      icon: 'success',
+      title: 'Update jalan',
+      text: data.message || 'App akan restart sebentar lagi.',
+      timer: 5000,
+      showConfirmButton: false
+    });
+  } else {
+    showToast(data.message || 'Update jalan.', 'success');
+  }
+
+  setTimeout(() => window.location.reload(), 8000);
+}
+
+async function checkForUpdate() {
+  if (updatePromptShown) return;
+
+  try {
+    const res = await fetch(`/api/update/check?t=${Date.now()}`);
+    if (!res.ok) return;
+
+    const data = await res.json();
+    if (!data.success || !data.update_available) return;
+
+    updatePromptShown = true;
+
+    if (!window.Swal) {
+      const yes = window.confirm(`Ada versi baru ${data.remote_version}. Update sekarang?`);
+      if (yes) await installUpdate();
+      return;
+    }
+
+    const result = await Swal.fire({
+      icon: 'info',
+      title: `Ada versi baru ${data.remote_version}`,
+      html: renderUpdateHtml(data),
+      showCancelButton: true,
+      confirmButtonText: 'Ya',
+      cancelButtonText: 'Tidak',
+      customClass: {
+        popup: 'vpn-update-popup'
+      }
+    });
+
+    if (result.isConfirmed) {
+      await installUpdate();
+    }
+  } catch (e) {
+  }
+}
+
+window.addEventListener('load', () => {
+  setTimeout(checkForUpdate, 1200);
+});
+
