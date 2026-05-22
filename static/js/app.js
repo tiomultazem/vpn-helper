@@ -188,7 +188,8 @@ function updateStatus(data) {
     gatewayMeta.textContent = 'Sesi gateway diterima, config belum terbaca.';
     setCardState('status-gateway', 'warning');
   } else if (data.last_error) {
-    gatewayText.textContent = 'Gagal';
+    const isIntentional = /disconnect|dihentikan|logout/i.test(data.last_error);
+    gatewayText.textContent = isIntentional ? 'Terputus' : 'Gagal';
     gatewayMeta.textContent = data.last_error;
     setCardState('status-gateway', 'warning');
   } else {
