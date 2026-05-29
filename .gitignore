@@ -14,4 +14,4 @@ __pycache__/
 venv/
 .agents/
 env/
-list.txt
+list.txt.pt_real/
