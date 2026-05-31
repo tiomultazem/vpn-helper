@@ -11,14 +11,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script>
   (function () {
-    var theme = localStorage.getItem('theme');
-    if (!theme) {
-      theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
+    var theme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', theme);
   })();
 </script>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}?v={{ range(1, 9999) | random }}">
 </head>
 <body>
 <div class="app-shell">
@@ -27,6 +24,13 @@
       <div class="header-brand">
         <img class="brand-logo" src="{{ url_for('assets', filename='logo.png') }}" alt="" aria-hidden="true">
         <h1 class="brand-name">VPN Helper</h1>
+      </div>
+      <div class="automate-container" id="automate-container" style="display: none;">
+        <span class="automate-label">Automate</span>
+        <label class="switch">
+          <input type="checkbox" id="automate-toggle" onchange="onAutomateChange(this)">
+          <span class="slider"></span>
+        </label>
       </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode" title="Toggle dark mode">☾</button>
     </div>

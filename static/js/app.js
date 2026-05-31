@@ -4,12 +4,13 @@ let latestLogs = [];
 let logsPaused = false;
 let connectNotificationPending = false;
 let tunnelStartRequested = false;
+let latestStatusData = {};
 
 (function () {
   const btn = document.querySelector('[data-theme-toggle]');
   const html = document.documentElement;
   const savedTheme = localStorage.getItem('theme');
-  let theme = savedTheme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  let theme = savedTheme || 'light';
 
   function applyTheme(nextTheme) {
     theme = nextTheme;
@@ -129,6 +130,19 @@ function setCardState(cardId, state) {
 }
 
 function updateStatus(data) {
+  latestStatusData = data;
+
+  // Sync Automate UI
+  const automateContainer = document.getElementById('automate-container');
+  const automateToggle = document.getElementById('automate-toggle');
+  if (data.dev_mode === 'pointcoffee') {
+    if (automateContainer) automateContainer.style.display = 'inline-flex';
+    if (automateToggle) automateToggle.checked = !!data.automate_mode;
+  } else {
+    if (automateContainer) automateContainer.style.display = 'none';
+    if (automateToggle) automateToggle.checked = false;
+  }
+
   const vpnConnected = !!data.vpn_connected;
   const ssoInProgress = !!data.sso_in_progress;
   const ssoCompleted = !!data.sso_completed;
@@ -451,4 +465,53 @@ async function checkForUpdate() {
 window.addEventListener('load', () => {
   setTimeout(checkForUpdate, 1200);
 });
+
+async function onAutomateChange(checkbox) {
+  if (checkbox.checked) {
+    // Check if credentials are set
+    if (!latestStatusData.has_credentials) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Kredensial Belum Diatur',
+        text: 'Silakan atur sso_username dan sso_password di file .env terlebih dahulu.',
+        confirmButtonColor: 'var(--primary)'
+      });
+      checkbox.checked = false;
+      return;
+    }
+
+    Swal.fire({
+      title: 'Do with your own risk',
+      text: 'Mengaktifkan handshake otomatis berisiko jika kredensial Anda salah atau sesi bermasalah.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Continue',
+      cancelButtonText: 'Cancel',
+      timer: 5000,
+      timerProgressBar: true,
+      confirmButtonColor: 'var(--primary)',
+      cancelButtonColor: 'var(--error)'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await apiCall('/api/automate/toggle', { automate: true });
+          showToast(res.message, 'success');
+        } catch (e) {
+          showToast(e.message, 'error');
+          checkbox.checked = false;
+        }
+      } else {
+        checkbox.checked = false;
+      }
+    });
+  } else {
+    try {
+      const res = await apiCall('/api/automate/toggle', { automate: false });
+      showToast(res.message, 'info');
+    } catch (e) {
+      showToast(e.message, 'error');
+      checkbox.checked = true;
+    }
+  }
+}
 
