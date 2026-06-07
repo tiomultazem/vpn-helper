@@ -21,7 +21,7 @@ Nyariin fitur ini ya?
 
 ![Fitur Automate VPN Connectioon](assets/automate.png)
 
-Fitur itu udah terinstal di VPN Helper mu tanpa kamu sadari. Kalo mo diaktifkan, chat wa aku ya.
+Fitur itu udah terinstal di VPN Helper mu tanpa kamu sadari. Kalo mo diaktifkan, chat wa aku ya. Ohiya FYI, fitur ini useless kalo kamu pake OTP. Jadi kalo ber-OTP, cuma bisa mode biasa ya ges.
 
 ---
 ## DISCLAIMER
