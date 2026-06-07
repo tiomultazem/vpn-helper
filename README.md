@@ -16,6 +16,10 @@ VPN itu pada dasarnya bikin tunnel: jalur khusus dari komputer kita ke jaringan 
 
 Silakan ikuti langkah menginstal OpenConnect di section [**Persiapan**](#persiapan).
 
+Nyariin fitur ini ya?
+![Fitur Automate VPN Connectioon](assets/automate.png)
+Fitur itu udah terinstal di VPN Helper mu tanpa kamu sadari. Kalo mo diaktifkan, chat wa aku ya.
+
 ---
 ## DISCLAIMER
 Aplikasi ini baru banget rilis (initial commit 19 Mei 2026) sehingga belum melalui stress test. dengan menggunakannya, anda secara tidak langsung berpartisipasi dalam uji stres sehingga sangat dianjurkan untuk secara aktif melaporkan bug yang anda temui.
@@ -52,7 +56,7 @@ Aplikasi ini baru banget rilis (initial commit 19 Mei 2026) sehingga belum melal
    & "C:\Program Files\OpenConnect\openconnect.exe" --version
    ```
 
-   Pastikan yang keluar versi `v9.12` atau 9.x lain, bukan `v7.08`.
+   Pastikan yang keluar versi `v9.12` atau 9.x lain, bukan di bawah 9.x.
 
    Kalau pakai lokasi custom, cukup ganti nilai `openconnect_path` di file `.env`.
 
