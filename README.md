@@ -16,8 +16,11 @@ VPN itu pada dasarnya bikin tunnel: jalur khusus dari komputer kita ke jaringan 
 
 Silakan ikuti langkah menginstal OpenConnect di section [**Persiapan**](#persiapan).
 
+
 Nyariin fitur ini ya?
+
 ![Fitur Automate VPN Connectioon](assets/automate.png)
+
 Fitur itu udah terinstal di VPN Helper mu tanpa kamu sadari. Kalo mo diaktifkan, chat wa aku ya.
 
 ---
