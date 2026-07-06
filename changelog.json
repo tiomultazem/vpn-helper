@@ -1,0 +1,12 @@
+{
+  "1.26.0627.lt": [
+    "modul terpisah"
+  ],
+  "1.26.0522": [
+    "Menambahkan config versi aplikasi.",
+    "Menyiapkan updater otomatis dari GitHub."
+  ],
+  "1.26.0629.lt": [
+    "memperbaiki kegagalan redirect ke link callback"
+  ]
+}

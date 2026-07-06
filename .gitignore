@@ -3,7 +3,7 @@
 README-internal.md
 realapp.py
 minifier.py
-c.bat
+commit.bat
 *.log
 server.out.log
 server.err.log
@@ -18,5 +18,5 @@ list.txt
 .pt_real/
 context.txt
 dem.bat
-mi.bat
+mini.bat
 *.lnk
