@@ -9,7 +9,7 @@
   "1.26.0629.lt": [
     "memperbaiki kegagalan redirect ke link callback"
   ],
-  "1.26.0707.pc": [
-    "fix error with exit code 2"
+  "1.26.0708.lt": [
+    "systray fix"
   ]
 }

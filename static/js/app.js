@@ -215,8 +215,6 @@ function updateStatus(data) {
   btnConnect.textContent = ssoInProgress ? 'Connecting...' : 'Connect';
   btnDisconnect.disabled = !(vpnConnected || ssoInProgress || ssoCompleted || cookieFound || configLoaded);
 
-  // Commented out to prevent infinite loop of SSO calls when VPN connects.
-  /*
   if (connectNotificationPending && configLoaded && !vpnConnected && !tunnelStartRequested) {
     tunnelStartRequested = true;
     apiCall('/api/connect/vpn', {})
@@ -226,7 +224,6 @@ function updateStatus(data) {
         showToast(e.message || 'Gagal memulai tunnel VPN.', 'error');
       });
   }
-  */
 
   if (connectNotificationPending && vpnConnected) {
     connectNotificationPending = false;
