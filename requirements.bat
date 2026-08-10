@@ -3,6 +3,24 @@ setlocal EnableExtensions
 
 cd /d "%~dp0"
 
+where openconnect >nul 2>&1
+if errorlevel 1 (
+    if not exist "C:\Program Files\OpenConnect-GUI\openconnect.exe" (
+        if not exist "C:\Program Files\OpenConnect\openconnect.exe" (
+            echo OpenConnect tidak ditemukan. Mendownload installer...
+            powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri 'https://www.infradead.org/openconnect-gui/download/openconnect-gui-1.6.2-win64.exe' -OutFile '%TEMP%\openconnect-installer.exe'"
+            if errorlevel 1 (
+                echo Gagal mendownload OpenConnect.
+                pause
+                exit /b 1
+            )
+            echo Menjalankan installer OpenConnect...
+            start /wait "" "%TEMP%\openconnect-installer.exe" /ALLUSERS
+            del /f /q "%TEMP%\openconnect-installer.exe"
+        )
+    )
+)
+
 where python >nul 2>&1
 if errorlevel 1 (
     echo Python is not installed or not available in PATH.
@@ -30,3 +48,4 @@ echo.
 echo Dependency check complete. This installer will self-destruct in 3 seconds.
 start "" cmd /c "timeout /t 3 /nobreak >nul & del /f /q ""%~f0"""
 exit /b 0
+

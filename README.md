@@ -40,26 +40,27 @@ Aplikasi ini baru banget rilis (initial commit 19 Mei 2026) sehingga belum melal
 
    Windows:
 
-   Download OpenConnect CLI 9.12.x untuk Windows 64-bit di sini:
+   `requirements.bat` akan otomatis mendownload installer OpenConnect jika belum terpasang. Namun jika ingin mendownload manual, gunakan link berikut:
    - [Direct OpenConnect 64-bit installer](https://www.infradead.org/openconnect-gui/download/openconnect-gui-1.6.2-win64.exe)
 
-   Kalau tampil jendela seperti ini saat instalasi, jangan lupa centang console.
+   Saat jendela installer tampil (baik dari `requirements.bat` maupun manual), pastikan centang opsi **console**.
 
    ![Centang console OpenConnect](assets/ceklis%20console.png)
 
    Setelah install, pastikan `.env` mengarah ke binary CLI-nya:
 
    ```env
-   openconnect_path=C:\Program Files\OpenConnect\openconnect.exe
+   openconnect_path=C:\Program Files\OpenConnect-GUI\openconnect.exe
    ```
 
    Cek versinya dari PowerShell:
 
    ```powershell
-   & "C:\Program Files\OpenConnect\openconnect.exe" --version
+   & "C:\Program Files\OpenConnect-GUI\openconnect.exe" --version
    ```
 
    Pastikan yang keluar versi `v9.12` atau 9.x lain, bukan di bawah 9.x.
+
 
    Kalau pakai lokasi custom, cukup ganti nilai `openconnect_path` di file `.env`.
 
@@ -103,11 +104,10 @@ Aplikasi ini baru banget rilis (initial commit 19 Mei 2026) sehingga belum melal
 
    Kalau dependensinya sudah ada, dia tidak install ulang. Kalau sukses, file installer itu akan menghapus dirinya sendiri setelah 3 detik. Kalau Python belum terinstal, dia cuma ngasih tahu lalu keluar tanpa menghapus dirinya.
 
-5. Download file `.env` dari Git BPS ku di [sini](https://git.bps.go.id/gilangprasetyo/vpn-helper), lalu taruh di root folder project ini.
+ 5. Persiapan berkas `.env`.
 
-```info
-Kenapa .env kupisah ke Git BPS? Isinya konfigurasi sensitif. Walaupun semua orang bisa menguliknya sendiri dengan brainstorming, namun setidaknya bukan karna lihat repoku. 
-```
+   Saat pertama kali me-run aplikasi via `run.bat`, sistem akan mendeteksi jika berkas `.env` belum ada. Aplikasi akan mengajukan pertanyaan yang hanya bisa dijawab oleh pegawai BPS. Jawab pakai huruf kecil semua.
+
 
 6. Jalankan aplikasi.
 
