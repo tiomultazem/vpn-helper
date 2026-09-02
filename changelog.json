@@ -11,5 +11,8 @@
   ],
   "1.26.0708.lt": [
     "systray fix"
+  ],
+  "1.26.0903.pc": [
+    "perbaikan automate yang gagal jalan secara otomatis"
   ]
 }
