@@ -18,5 +18,8 @@
   "1.26.0905.lt": [
     "perbaikan automasi yang kadang gagal berjalan",
     "perbaikan file enkripsi"
+  ],
+  "1.26.0914.lt": [
+    "Menambahkan uji coba akomodasi pengguna ber-OTP"
   ]
 }
