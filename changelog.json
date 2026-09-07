@@ -14,5 +14,9 @@
   ],
   "1.26.0903.pc": [
     "perbaikan automate yang gagal jalan secara otomatis"
+  ],
+  "1.26.0905.lt": [
+    "perbaikan automasi yang kadang gagal berjalan",
+    "perbaikan file enkripsi"
   ]
 }
