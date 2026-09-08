@@ -21,5 +21,8 @@
   ],
   "1.26.0914.lt": [
     "Menambahkan uji coba akomodasi pengguna ber-OTP"
+  ],
+  "1.26.0914.lt2": [
+    "Implementasi bypass aplikasi"
   ]
 }
