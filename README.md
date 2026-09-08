@@ -25,7 +25,7 @@ Fitur itu udah terinstal di VPN Helper mu tanpa kamu sadari. Kalo mo diaktifkan,
 
 ---
 ## DISCLAIMER
-Aplikasi ini baru banget rilis (initial commit 19 Mei 2026) sehingga belum melalui stress test. dengan menggunakannya, anda secara tidak langsung berpartisipasi dalam uji stres sehingga sangat dianjurkan untuk secara aktif melaporkan bug yang anda temui.
+Aplikasi ini dirilis di 19 Mei 2026. sudah melalui berbagai stress test dari beberapa pengguna, sehingga versinya terus terus lebih baik dari sebelumnya hingga hari ini. dengan menggunakannya, anda juga secara tidak langsung berpartisipasi dalam uji stres. sangat dianjurkan untuk secara aktif melaporkan bug yang anda temui, biar VPN Helper semakin baik lagi.
 
 ---
 ## Persiapan
