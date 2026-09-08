@@ -230,6 +230,8 @@ function updateStatus(data) {
     tunnelStartRequested = false;
     notifyAction('VPN Helper - VPN connected', 'VPN connected.', 'success');
   }
+
+  updateBypassUI(data);
 }
 
 async function pollStatus() {
@@ -241,6 +243,19 @@ async function pollStatus() {
     renderLogs(data.logs || []);
   } catch (e) {
   }
+}
+
+function switchTab(name) {
+  const tabs = ['log', 'bypass'];
+  tabs.forEach(t => {
+    const pane = document.getElementById(`tab-pane-${t}`);
+    const btn = document.getElementById(`tab-btn-${t}`);
+    const actions = document.getElementById(`tab-actions-${t}`);
+    const isActive = t === name;
+    if (pane) pane.classList.toggle('active', isActive);
+    if (btn) btn.classList.toggle('active', isActive);
+    if (actions) actions.style.display = isActive ? 'flex' : 'none';
+  });
 }
 
 setInterval(pollStatus, 1500);
@@ -514,3 +529,137 @@ async function onAutomateChange(checkbox) {
   }
 }
 
+// ─── Bypass / Split-Tunnel UI ─────────────────────────────────────────────────
+
+function renderBypassList(elementId, items, deleteFn) {
+  const ul = document.getElementById(elementId);
+  if (!ul) return;
+  ul.innerHTML = '';
+  if (items.length === 0) {
+    ul.innerHTML = '<li class="bypass-list-item empty">Belum ada entri</li>';
+    return;
+  }
+  items.forEach(item => {
+    const li = document.createElement('li');
+    li.className = 'bypass-list-item';
+    const span = document.createElement('span');
+    span.className = 'bypass-item-label';
+    span.title = item;
+    span.textContent = item;
+    const btn = document.createElement('button');
+    btn.className = 'bypass-delete-btn';
+    btn.title = 'Hapus';
+    btn.textContent = '✕';
+    btn.addEventListener('click', () => {
+      if (typeof window[deleteFn] === 'function') {
+        window[deleteFn](item);
+      }
+    });
+    li.appendChild(span);
+    li.appendChild(btn);
+    ul.appendChild(li);
+  });
+}
+
+function updateBypassUI(data) {
+  const toggle = document.getElementById('bypass-toggle');
+  if (toggle) toggle.checked = !!data.bypass_enabled;
+
+  renderBypassList('bypass-apps-list', data.bypass_apps || [], 'bypassRemoveApp');
+  renderBypassList('bypass-domains-list', data.bypass_domains || [], 'bypassRemoveDomain');
+
+  const gw = data.bypass_physical_gateway;
+  const routes = data.bypass_active_routes || {};
+  const routeCount = Object.keys(routes).length;
+
+  const gwEl = document.getElementById('bypass-status-gw');
+  const routeEl = document.getElementById('bypass-status-routes');
+  const ifaceEl = document.getElementById('bypass-status-iface');
+
+  if (gwEl) gwEl.textContent = gw || '—';
+  if (routeEl) {
+    if (routeCount > 0) {
+      const labels = Object.entries(routes).map(([ip, meta]) => `${ip} (${meta.domain || ''})`).join(', ');
+      routeEl.textContent = `${routeCount} aktif: ${labels}`;
+    } else {
+      routeEl.textContent = data.bypass_enabled ? 'Belum ada route' : 'Nonaktif';
+    }
+  }
+  if (ifaceEl) ifaceEl.textContent = gw ? 'Terdeteksi' : 'Tidak ditemukan';
+
+  const refreshBtn = document.getElementById('bypass-refresh-btn');
+  if (refreshBtn) refreshBtn.disabled = !data.vpn_connected || !data.bypass_enabled;
+}
+
+async function onBypassToggle(checkbox) {
+  try {
+    const res = await apiCall('/api/bypass/toggle', { enabled: checkbox.checked });
+    showToast(res.message, res.enabled ? 'success' : 'info');
+    await pollStatus();
+  } catch (e) {
+    showToast(e.message || 'Gagal mengubah status bypass.', 'error');
+    checkbox.checked = !checkbox.checked;
+  }
+}
+
+async function bypassAddApp() {
+  const input = document.getElementById('bypass-app-input');
+  const path = (input ? input.value : '').trim();
+  if (!path) { showToast('Path tidak boleh kosong.', 'error'); return; }
+  try {
+    const res = await apiCall('/api/bypass/apps', { path });
+    showToast(res.message, 'success');
+    if (input) input.value = '';
+    await pollStatus();
+  } catch (e) {
+    showToast(e.message || 'Gagal menambah aplikasi.', 'error');
+  }
+}
+
+async function bypassRemoveApp(path) {
+  try {
+    const res = await apiCall('/api/bypass/apps/delete', { path });
+    showToast(res.message, res.success ? 'success' : 'error');
+    await pollStatus();
+  } catch (e) {
+    showToast(e.message || 'Gagal menghapus aplikasi.', 'error');
+  }
+}
+
+async function bypassAddDomain() {
+  const input = document.getElementById('bypass-domain-input');
+  const domain = (input ? input.value : '').trim();
+  if (!domain) { showToast('Domain tidak boleh kosong.', 'error'); return; }
+  try {
+    const res = await apiCall('/api/bypass/domains', { domain });
+    showToast(res.message, 'success');
+    if (input) input.value = '';
+    await pollStatus();
+  } catch (e) {
+    showToast(e.message || 'Gagal menambah domain.', 'error');
+  }
+}
+
+async function bypassRemoveDomain(domain) {
+  try {
+    const res = await apiCall('/api/bypass/domains/delete', { domain });
+    showToast(res.message, res.success ? 'success' : 'error');
+    await pollStatus();
+  } catch (e) {
+    showToast(e.message || 'Gagal menghapus domain.', 'error');
+  }
+}
+
+async function bypassRefresh() {
+  const btn = document.getElementById('bypass-refresh-btn');
+  if (btn) btn.disabled = true;
+  try {
+    const res = await apiCall('/api/bypass/refresh', {});
+    showToast(res.message, 'success');
+    await pollStatus();
+  } catch (e) {
+    showToast(e.message || 'Gagal refresh routes.', 'error');
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
