@@ -8,7 +8,7 @@ Coba pake ini. Aku ga jamin anti down, tapi ini ga semaruk Forti dalam menggunak
 
 ---
 ## Ini Apa?
-Intinya ini VPN pengganti Forticlient yang ngaturnya di browser.
+Intinya ini VPN pengganti Forticlient, ngaturnya lewat browser.
 
 ---
 ## Extras
