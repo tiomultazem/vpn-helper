@@ -10,6 +10,12 @@ Coba pake ini. Aku ga jamin anti down, tapi ini ga semaruk Forti dalam menggunak
 ## Ini Apa?
 Intinya ini VPN pengganti Forticlient, ngaturnya lewat browser.
 
+### Changelog
+
+| Versi | Perubahan |
+| --- | --- |
+| `1.26.0627.lt` | Modul terpisah |
+
 ---
 ## Extras
 VPN itu pada dasarnya bikin tunnel: jalur khusus dari komputer kita ke jaringan tujuan. Aplikasi ini ngurus login SSO dan sesi gateway-nya, tapi tetap butuh mesin tunnel yang beneran mengangkat traffic jaringan. Mesin itu namanya OpenConnect.
