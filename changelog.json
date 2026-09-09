@@ -23,6 +23,6 @@
     "Menambahkan uji coba akomodasi pengguna ber-OTP"
   ],
   "1.26.0914.lt2": [
-    "Implementasi bypass aplikasi"
+    "Implementasi bypass aplikasi. Aplikasi yang koneksinya terputus/timeout gara-gara dialihkan ke VPN Helper bisa dimasukkan ke daftar bypass ini."
   ]
 }
