@@ -17,6 +17,7 @@ Intinya ini VPN pengganti Forticlient, ngaturnya lewat browser.
 | `1.26.0627.lt` | Modul terpisah |
 | `1.26.0629.lt` | Memperbaiki kegagalan redirect ke link callback |
 | `1.26.0708.lt` | Systray fix |
+| `1.26.0903.pc` | Perbaikan automate yang gagal jalan secara otomatis |
 
 ---
 ## Extras
