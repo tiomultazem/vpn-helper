@@ -20,6 +20,7 @@ Intinya ini VPN pengganti Forticlient, ngaturnya lewat browser.
 | `1.26.0903.pc` | Perbaikan automate yang gagal jalan secara otomatis |
 | `1.26.0905.lt` | Perbaikan automasi yang kadang gagal berjalan, perbaikan file enkripsi |
 | `1.26.0914.lt` | Menambahkan uji coba akomodasi pengguna ber-OTP |
+| `1.26.0914.lt2` | Implementasi bypass aplikasi. Aplikasi yang koneksinya terputus/timeout gara-gara dialihkan ke VPN Helper bisa dimasukkan ke daftar bypass ini. |
 
 ---
 ## Extras
