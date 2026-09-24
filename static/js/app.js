@@ -132,10 +132,10 @@ function setCardState(cardId, state) {
 function updateStatus(data) {
   latestStatusData = data;
 
-  // Sync Automate UI
+  // Sync Automate UI (hanya untuk SSL / Fortinet)
   const automateContainer = document.getElementById('automate-container');
   const automateToggle = document.getElementById('automate-toggle');
-  if (data.dev_mode === 'pointcoffee') {
+  if (data.dev_mode === 'pointcoffee' && !isGpMode()) {
     if (automateContainer) automateContainer.style.display = 'inline-flex';
     if (automateToggle) automateToggle.checked = !!data.automate_mode;
   } else {
@@ -215,6 +215,12 @@ function updateStatus(data) {
   btnConnect.textContent = ssoInProgress ? 'Connecting...' : 'Connect';
   btnDisconnect.disabled = !(vpnConnected || ssoInProgress || ssoCompleted || cookieFound || configLoaded);
 
+  const btnModeSsl = document.getElementById('mode-btn-ssl');
+  const btnModeTls = document.getElementById('mode-btn-tls');
+  const modeLocked = ssoInProgress || vpnConnected;
+  if (btnModeSsl) btnModeSsl.disabled = modeLocked;
+  if (btnModeTls) btnModeTls.disabled = modeLocked;
+
   if (connectNotificationPending && configLoaded && !vpnConnected && !tunnelStartRequested) {
     tunnelStartRequested = true;
     apiCall('/api/connect/vpn', {})
@@ -282,12 +288,57 @@ async function apiCall(url, body = {}) {
   return data;
 }
 
+// ─── VPN Mode (SSL / TLS) ────────────────────────────────────────────────────
+
+function isGpMode() {
+  return localStorage.getItem('vpn_mode') === 'tls';
+}
+
+function syncVpnModeUI() {
+  const current = isGpMode() ? 'tls' : 'ssl';
+  const container = document.getElementById('vpn-mode-container');
+  const btnSsl = document.getElementById('mode-btn-ssl');
+  const btnTls = document.getElementById('mode-btn-tls');
+  if (container) {
+    container.setAttribute('data-mode', current);
+  }
+  if (btnSsl && btnTls) {
+    btnSsl.classList.toggle('active', current === 'ssl');
+    btnTls.classList.toggle('active', current === 'tls');
+  }
+}
+
+function setVpnMode(mode) {
+  const isConnected = latestStatusData && (latestStatusData.vpn_connected || latestStatusData.sso_in_progress);
+  if (isConnected) {
+    showToast('Putuskan koneksi sebelum ganti mode.', 'warning');
+    return;
+  }
+  localStorage.setItem('vpn_mode', mode);
+  syncVpnModeUI();
+  updateStatus(latestStatusData);
+}
+
+// Inisialisasi mode saat halaman dimuat
+(function initVpnMode() {
+  syncVpnModeUI();
+})();
+
+// ─── Connect / Disconnect ─────────────────────────────────────────────────────
+
 async function connectVPN() {
   const btn = document.getElementById('btn-vpn-connect');
   btn.disabled = true;
 
   try {
-    const data = await apiCall('/api/connect/sso', {});
+    let data;
+    if (isGpMode()) {
+      // Mode TLS: GlobalProtect
+      data = await apiCall('/api/gp/connect', { portal: 'vpn.bps.go.id' });
+    } else {
+      // Mode SSL: Fortinet
+      data = await apiCall('/api/connect/sso', {});
+    }
     connectNotificationPending = true;
     tunnelStartRequested = false;
     showToast(data.message || 'Connect dimulai.', 'success');
@@ -310,6 +361,7 @@ async function disconnectVPN() {
     showToast(e.message || 'Gagal disconnect.', 'error');
   }
 }
+
 
 async function clearLogs() {
   try {
