@@ -134,6 +134,61 @@ div.swal2-container .swal2-timer-progress-bar { background:var(--primary) !impor
   align-items: center;
   gap: 0.5rem;
 }
+.vpn-mode-segmented {
+  position: absolute;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  background: var(--surface-off);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px;
+}
+.mode-glider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  width: calc(50% - 2px);
+  background: var(--primary);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+.vpn-mode-segmented[data-mode="tls"] .mode-glider {
+  transform: translateX(100%);
+}
+.mode-btn {
+  position: relative;
+  z-index: 2;
+  width: 2.75rem;
+  padding: 0.2rem 0;
+  text-align: center;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: .04em;
+  border-radius: 999px;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 180ms ease;
+  line-height: 1.2;
+}
+.mode-btn:hover {
+  color: var(--text);
+}
+.mode-btn.active {
+  color: var(--text-inv);
+  background: transparent;
+  box-shadow: none;
+}
+.mode-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
 .automate-label {
   font-size: var(--text-xs);
   font-weight: 600;
