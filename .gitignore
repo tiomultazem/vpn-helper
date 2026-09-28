@@ -22,3 +22,4 @@ mini.bat
 *.lnk
 envencr.bat
 artifacts/
+.vscode/
