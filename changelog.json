@@ -31,5 +31,9 @@
   "1.26.1001.pc": [
     "Penambahan mode koneksi GlobalProtect, mengakomodir migrasi sistem BPS",
     "Penambahan fitur bypass tunnel untuk web/aplikasi yang diblokir VPN BPS"
+  ],
+  "1.26.1119.pc": [
+    "Migrasi python ke C#",
+    "Pengguna tidak perlu lagi menginstal python sebagai runtime aplikasi"
   ]
 }
