@@ -8,11 +8,19 @@ Coba pake ini. Aku ga jamin anti down, tapi ini ga semaruk Forti dalam menggunak
 
 ---
 ## Ini Apa?
-Intinya ini VPN pengganti Forticlient, aplikasinya jalan lewat browser.
+VPN pengganti FortiClient dan GlobalProtect. Berjalan mandiri langsung di desktop dan system tray tanpa memakan resource berlebih.
 
 ---
-## ANNOUNCEMENT
-VPN Helper dibuat dengan satu tolok ukur: _fast and reliable_. Seiring migrasi BPS RI ke GlobalProtect, integrasi protokol baru ini sedang diuji hingga batas evaluasi 31 Desember 2026. Apabila aplikasi resmi GlobalProtect pada saat itu terbukti sudah mampu memenuhi standar _fast and reliable_ tersebut secara mandiri, maka fungsi VPN Helper telah usai dan proyek ini akan dipensiunkan (deprecated) karena tujuannya telah tercapai.
+## ANNOUNCEMENT: Migrasi ke C# .NET 9 & Deprekasi Python
+Versi Python (Flask/Web UI) telah **dideprecate secara bertahap** dan kini sepenuhnya digantikan oleh arsitektur **C# .NET 9 Desktop Native**. 
+
+Keuntungan versi baru ini:
+- **True Standalone Executable**: Tidak butuh instalasi Python, pip, atau web browser.
+- **Hemat Resource**: Konsumsi RAM sangat ringan (~30 MB).
+- **Fluent Dark UI & Native Systray**: Antarmuka modern yang otomatis meminimalkan diri ke system tray saat tersambung.
+
+> [!NOTE]
+> Seiring migrasi BPS RI ke GlobalProtect, integrasi protokol baru ini sedang diuji hingga batas evaluasi 31 Desember 2026. Apabila aplikasi resmi GlobalProtect pada saat itu terbukti sudah mampu memenuhi standar _fast and reliable_ secara mandiri, maka fungsi VPN Helper telah usai dan proyek ini akan dipensiunkan karena tujuannya telah tercapai.
 
 ---
 
@@ -20,15 +28,16 @@ VPN Helper dibuat dengan satu tolok ukur: _fast and reliable_. Seiring migrasi B
 
 | Versi | Perubahan |
 | --- | --- |
-| `1.26.0522` | Menambahkan config versi aplikasi.<br>Menyiapkan updater otomatis dari GitHub. |
-| `1.26.0627.lt` | Modul terpisah |
-| `1.26.0629.lt` | Memperbaiki kegagalan redirect ke link callback |
-| `1.26.0708.lt` | Systray fix |
-| `1.26.0903.pc` | Perbaikan automate yang gagal jalan secara otomatis |
-| `1.26.0905.lt` | Perbaikan automasi yang kadang gagal berjalan, perbaikan file enkripsi |
-| `1.26.0914.lt` | Menambahkan uji coba akomodasi pengguna ber-OTP |
-| `1.26.0914.lt2` | Implementasi bypass aplikasi. Aplikasi yang koneksinya terputus/timeout gara-gara dialihkan ke VPN Helper bisa dimasukkan ke daftar bypass ini. |
+| `2.26.1119.pc` | **Major Release: Migrasi Total ke C# .NET 9 Native**.<br>• Deprekasi penuh versi Python/Flask.<br>• Biner tunggal mandiri (`VPN Helper.exe`) tanpa perlu instalasi Python atau browser web.<br>• Antarmuka desktop WPF Fluent Dark & System Tray terintegrasi.<br>• Dukungan dual-mode: FORTI (`akses.bps.go.id`) dan GP (`vpn.bps.go.id`).<br>• Penyederhanaan instalasi via `requirements.bat` (auto-download OpenConnect & auto-launch aplikasi). |
 | `1.26.0924.pc` | Menambahkan fungsi eksperimental untuk VPN GlobalProtect. Fitur ini belum bisa dipakai maksimal mengingat transisi VPN yang masih berjalan di pusat. |
+| `1.26.0914.lt2` | Implementasi bypass aplikasi. Aplikasi yang koneksinya terputus/timeout gara-gara dialihkan ke VPN Helper bisa dimasukkan ke daftar bypass ini. |
+| `1.26.0914.lt` | Menambahkan uji coba akomodasi pengguna ber-OTP |
+| `1.26.0905.lt` | Perbaikan automasi yang kadang gagal berjalan, perbaikan file enkripsi |
+| `1.26.0903.pc` | Perbaikan automate yang gagal jalan secara otomatis |
+| `1.26.0708.lt` | Systray fix |
+| `1.26.0629.lt` | Memperbaiki kegagalan redirect ke link callback |
+| `1.26.0627.lt` | Modul terpisah |
+| `1.26.0522` | Menambahkan config versi aplikasi.<br>Menyiapkan updater otomatis dari GitHub. |
 
 ---
 ## Extras
@@ -36,10 +45,9 @@ VPN itu pada dasarnya bikin tunnel: jalur khusus dari komputer kita ke jaringan 
 
 Silakan ikuti langkah menginstal OpenConnect di section [**Persiapan**](#persiapan).
 
-
 Nyariin fitur ini ya?
 
-![Fitur Automate VPN Connectioon](assets/automate.png)
+![Fitur Automate VPN Connection](assets/automate.png)
 
 Fitur itu udah terinstal di VPN Helper mu tanpa kamu sadari. Kalo mo diaktifkan, chat wa aku ya. Ohiya FYI, fitur ini useless kalo kamu pake OTP. Jadi kalo ber-OTP, cuma bisa mode biasa ya ges.
 
@@ -50,79 +58,71 @@ Aplikasi ini dirilis di 19 Mei 2026. sudah melalui berbagai stress test dari beb
 ---
 ## Persiapan
 
-1. Clone repo ini atau download ZIP-nya, lalu ekstrak ke folder pilihanmu.
+### Cara Termudah (Rekomendasi):
+1. Kunjungi halaman **[Releases](https://github.com/tiomultazem/vpn-helper/releases)** pada repositori ini.
+2. Unduh berkas ZIP rilis terbaru (`VPN-Helper.zip`), lalu ekstrak isinya ke folder mana pun di komputermu.
+3. Di dalam folder hasil ekstrak, cukup jalankan **`requirements.bat`**:
+   - Skrip ini akan otomatis mendeteksi apakah OpenConnect sudah terpasang. Jika belum, skrip akan mengunduh installer OpenConnect secara otomatis.
+   - Setelah OpenConnect terinstal, skrip akan **langsung meluncurkan file `VPN Helper.exe` secara otomatis**.
+4. Selesai! Untuk pemakaian sehari-hari selanjutnya, Anda cukup membuka **`VPN Helper.exe`**.
 
-2. Pastikan Python sudah terinstal.
+---
 
-   Biasalah, seluruh app ku pake Python.
+### Langkah Manual & Panduan OpenConnect:
 
-3. Install OpenConnect.
-
-   `requirements.bat` akan otomatis mendownload installer OpenConnect jika belum terpasang. Namun jika ingin mendownload manual, gunakan link berikut:
+1. **Unduh OpenConnect**:
+   Jika `requirements.bat` tidak dapat mengunduh secara otomatis atau Anda ingin memasangnya manual, gunakan tautan resmi berikut:
    - [Direct OpenConnect 64-bit installer](https://www.infradead.org/openconnect-gui/download/openconnect-gui-1.6.2-win64.exe)
 
-   Saat jendela installer tampil (baik dari `requirements.bat` maupun manual), pastikan centang opsi **console**.
+2. **PENTING: Opsi Console & System PATH**:
+   Saat jendela instalasi OpenConnect tampil (baik lewat `requirements.bat` maupun manual):
+   - Pada halaman *Install Options*, pilih opsi: **Add OpenConnect to the system PATH for all users**.
+   - Pada halaman *Choose Components*, **wajib centang opsi console**.
 
    ![Centang console OpenConnect](assets/ceklis%20console.png)
 
-   Setelah install, pastikan `.env` mengarah ke binary CLI-nya:
-
-   ```env
-   openconnect_path=C:\Program Files\OpenConnect-GUI\openconnect.exe
+   *Bila opsi PATH terlewat*, Anda dapat menambahkannya manual melalui PowerShell (Run as Administrator):
+   ```powershell
+   [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", "Machine") + ";C:\Program Files\OpenConnect-GUI", "Machine")
+   ```
+   Atau via Command Prompt (Administrator):
+   ```cmd
+   setx PATH "%PATH%;C:\Program Files\OpenConnect-GUI" /M
    ```
 
-   Cek versinya dari PowerShell:
-
+3. **Verifikasi Instalasi**:
+   Buka PowerShell dan jalankan perintah berikut untuk memastikan versi OpenConnect adalah `v9.x`:
    ```powershell
    & "C:\Program Files\OpenConnect-GUI\openconnect.exe" --version
    ```
+   Pastikan yang keluar adalah versi `v9.12` atau varian 9.x lainnya (bukan di bawah 9.x).
 
-   Pastikan yang keluar versi `v9.12` atau 9.x lain, bukan di bawah 9.x.
-
-
-   Kalau pakai lokasi custom, cukup ganti nilai `openconnect_path` di file `.env`.
-
-4. Install dependensi Python.
-
-   Windows:
-
-   ```bat
-   requirements.bat
+4. **Konfigurasi Akun (`.env`)**:
+   Saat pertama kali membuka `VPN Helper.exe`, jika berkas `.env` belum tersedia, aplikasi akan menampilkan dialog verifikasi pegawai BPS. Masukkan jawaban yang diminta (huruf kecil semua) agar berkas `.env` ter-generate otomatis.
+   Buka berkas `.env` tersebut dan isi kredensial akun SSO Anda:
+   ```env
+   SSO_USERNAME="username sso mu, hapus petik"
+   SSO_PASSWORD="password sso mu, hapus petik"
    ```
+> [!NOTE]
+> isi SSO di sini hanya untuk mode automate. Bila anda tidak mau automate, mau login manual aja di browser, ya sudah tidak perlu mengisi.
 
-   Mac/Linux:
+5. **Jalankan Aplikasi**:
+   Cukup klik dua kali pada **`VPN Helper.exe`** (atau jalankan via `run.bat`).
 
-   ```bash
-   sh requirements.sh
-   ```
+---
 
-   Kalau dependensinya sudah ada, dia tidak install ulang. Kalau sukses, file installer itu akan menghapus dirinya sendiri setelah 3 detik. Kalau Python belum terinstal, dia cuma ngasih tahu lalu keluar tanpa menghapus dirinya.
+## Cara Penggunaan
 
- 5. Persiapan berkas `.env`.
+Ada 3 indikator status di kartu antarmuka aplikasi:
+- **SSO**: Berubah hijau (*Terautentikasi*) ketika login SSO Keycloak berhasil.
+- **Gateway**: Berubah hijau (*Terverifikasi*) ketika token gateway berhasil ditukar dan sesi SSL/TLS terkonfirmasi.
+- **VPN**: Berubah hijau (*Terhubung*) ketika terowongan OpenConnect aktif mengalirkan traffic jaringan.
 
-   Saat pertama kali me-run aplikasi via `run.bat`, sistem akan mendeteksi jika berkas `.env` belum ada. Aplikasi akan mengajukan pertanyaan yang hanya bisa dijawab oleh pegawai BPS. Jawab pakai huruf kecil semua.
-
-
-6. Jalankan aplikasi.
-
-   Windows:
-
-   ```bat
-   run.bat
-   ```
-   
-7. Akses di http://localhost:8765
-
-8. Ada 3 status di aplikasi:
-
-   - SSO: hijau kalau login SSO sudah selesai dan app menerima Authentication ID.
-   - Gateway: hijau kalau Authentication ID sudah ditukar menjadi sesi SSL-VPN dan konfigurasi gateway berhasil dibaca.
-   - VPN: hijau kalau tunnel OpenConnect sudah aktif.
-
-   Tombolnya sederhana:
-
-   - `Connect`: menjalankan SSO, menyiapkan Gateway, lalu otomatis menjalankan tunnel VPN.
-   - `Disconnect`: memutus tunnel VPN dan membersihkan sesi SSO/Gateway, supaya connect berikutnya mulai dari sesi baru.
+Tombol antarmuka:
+- **Connect**: Menjalankan autentikasi SSO, verifikasi gateway, dan otomatis mengangkat tunnel VPN. Setelah terhubung dan seluruh kartu status berwarna hijau, aplikasi akan otomatis meminimalkan diri ke system tray setelah jeda visual 1,5 detik.
+- **Disconnect**: Memutus tunnel VPN dan membersihkan sesi gateway.
+- **Toggle Mode (FORTI / GP)**: Memilih protokol terowongan antara Fortinet (`akses.bps.go.id`) atau GlobalProtect (`vpn.bps.go.id`).
 
 ---
 
