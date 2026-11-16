@@ -1,26 +1,86 @@
-[Dd]esktop.ini
+# =============================================================================
+# 1. KREDENSIAL, RAHASIA & PIPELINE MITRA (PRIVATE - ZERO LEAKAGE)
+# =============================================================================
 .env
-README-internal.md
-realapp.py
-minifier.py
-commit.bat
+.env.*
+*.env
+*mitra*
+*Mitra*
+compile.bat
+build_mitra_payload.ps1
+mitra.secrets.env
+*.secret.*
+*.enc
+.gp_session.json
+audit*.md
+debug*.html
+commit.txt
+
+# =============================================================================
+# 2. OUTPUT BINER, PUBLISH & ARTIFAK .NET
+# =============================================================================
+[Bb]in/
+[Oo]bj/
+obj_publish/
+VPN Helper.exe
+*.exe
+*.dll
+*.pdb
+*.msi
+*.user
+*.suo
+
+# =============================================================================
+# 3. LOG DIAGNOSTIK & KELUARAN TERMINAL
+# =============================================================================
 *.log
+vpn_helper.log
 server.out.log
 server.err.log
+error.txt
+
+# =============================================================================
+# 4. GAMBAR TEMPORER, TANGKAPAN LAYAR & CATATAN PENGEMBANG
+# =============================================================================
+Screenshot*.png
+*.png
+*.jpg
+*.jpeg
+*.ico
+!assets/favicon.ico
+artifacts/
+context.txt
+list.txt
+
+# =============================================================================
+# 5. METADATA SISTEM OPERASI & LINGKUNGAN PENGEMBANG (IDE)
+# =============================================================================
+[Dd]esktop.ini
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.lnk
+
+# =============================================================================
+# 6. RESIDU MODUL & DEPENDENSI PYTHON (LEGACY)
+# =============================================================================
 __pycache__/
 *.py[cod]
 .pytest_cache/
 .venv/
 venv/
-.agents/
 env/
-list.txt
+.agents/
 .pt_real/
-context.txt
+
+# =============================================================================
+# 7. SKRIP LOKAL KHUSUS PENGEMBANG
+# =============================================================================
+commit.bat
 dem.bat
 mini.bat
-*.lnk
+minifier.py
+realapp.py
 envencr.bat
-artifacts/
-.vscode/
-.gp_session.json
+README-internal.md
